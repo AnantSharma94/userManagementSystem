@@ -5,16 +5,19 @@ const app = express();
 
 app.use(express.json());
 
-const PORT = 8000;
-
-app.use(logger);
+const PORT = process.env.PORT || 8000;
 
 app.use('/api', router);
 
+app.use(logger);
+
 function logger(req, res, next){
+
+  const apiUrl = `http://${req.headers.host}${req.url}`;
+
   console.log({
     "METHOD" : req.method,
-    "Request URL" : `http://${req.headers.host}${req.url}`,
+    "Request URL" : apiUrl,
     "Request DATA" : req.body
   });
   next();
@@ -24,6 +27,4 @@ function logger(req, res, next){
 
 app.listen(PORT, ()=>{
     console.log(`server is running at port ${PORT}`);
-    //console.log('http://localhost:%s', PORT);
-  //  console.log('url:%s');
 })
