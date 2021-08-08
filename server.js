@@ -20,7 +20,6 @@ function logger(req, res, next){
     "Request URL" : apiUrl,
     "Request DATA" : req.body
   });
-  next();
 }
 
 
